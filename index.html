@@ -1355,7 +1355,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
      
       .concept {
-          width: 80%;
+          width: 100%;
           height: 100px;
           background-color: #6984dd;
           min-width: 400px;
@@ -1478,16 +1478,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="stat-widget" assetpath="elements/">
+<polymer-element name="stat-widget" attributes="vote" assetpath="elements/">
 
-  <template attributes="vote votes">
+  <template> <!-- attributes="vote votes"> -->
     <template repeat="{{ chosenConcepts in dataForStatBar }}">
-      <stat-bar concept="{{ chosenConcepts}}"></stat-bar>
+      <stat-bar concept="{{ chosenConcepts }}"></stat-bar>
     </template>
   </template>
 
   <script>    
-    Polymer('stat-widget', {     
+    Polymer('stat-widget', {
+      voteChanged: function(){
+        console.log('vote from within stat-widget:');
+        console.log(this.vote);
+        var choices = this.vote.concepts;
+        for(var item in this.concepts) {
+          var name = this.concepts[item].name;
+          for(var i = 0; i < choices.length; i++) {
+            if(name === choices[i]) {
+              this.dataForStatBar.push(this.concepts[item]);
+              console.log('logging next dataForStatBar: ' + i);
+              console.log(this.dataForStatBar[i]);
+            }
+          }
+        }
+      },     
       concepts: [
         {  
           name: "security",
@@ -1532,24 +1547,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           semiWorking: 5
         }
       ],
-      vote: {
-        id: 1,
-        houseType: "flat",
-        conceptChoice: ["security", "wealth", "health"]
-      },
+      // vote: {
+      //   id: 1,
+      //   houseType: "flat",
+      //   conceptChoice: ["security", "wealth", "health"]
+      // },
       dataForStatBar: [],
       ready: function(){
-        var choices = this.vote.conceptChoice;
-        for(var object in this.concepts) {
-          var name = this.concepts[object].name;
-          for(var i = 0; i < choices.length; i++) {
-            if(name === choices[i]) {
-              this.dataForStatBar[i] = this.concepts[object];
-              console.log(this.dataForStatBar[i]);
-            }
-          }
-        }
-      }       
+      //   var choices = this.vote.conceptChoice;
+      //   for(var object in this.concepts) {
+      //     var name = this.concepts[object].name;
+      //     for(var i = 0; i < choices.length; i++) {
+      //       if(name === choices[i]) {
+      //         this.dataForStatBar[i] = this.concepts[object];
+      //         console.log(this.dataForStatBar[i]);
+      //       }
+      //     }
+      //   }
+      }
+
     });
   </script>
 </polymer-element>
@@ -1823,7 +1839,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="cth-housemouse" noscript="" assetpath="elements/">
+<polymer-element name="cth-housemouse" assetpath="elements/">
 	<template>
     <style>header {
   height:160px;
@@ -1937,7 +1953,11 @@ a {
     </div>
 	</section>
 
-  <stat-widget vote="{{ singleVote }}"></stat-widget>
+	<section class="statArea">
+    <div class="centerer">	
+      <stat-widget vote="{{ singleVote }}"></stat-widget>
+    </div>
+	</section>
 
 	<section class="footerarea">	
 		<div class="centerer">	
@@ -1946,6 +1966,14 @@ a {
 	</div></div></section>
 
 	</template>
+	<script>
+		Polymer('cth-housemouse', {
+			singleVoteChanged: function(){
+				console.log('singleVote from within umbrella:');
+				console.log(this.singleVote);
+			}
+		});
+	</script>
 </polymer-element>
 
 
