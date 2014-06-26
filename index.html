@@ -557,7 +557,7 @@ html /deep/ [segment], html /deep/ segment {
        	login: function() {
           var self = this;
           var userInfo = {};
-          var firebaseRef = new Firebase("https://crackling-fire-9322.firebaseio.com");
+          var firebaseRef = new Firebase("https://cth-housemouse.firebaseio.com/");
           var auth = new FirebaseSimpleLogin(firebaseRef, function(error, user) {
             if (error) {
               alert(error);
