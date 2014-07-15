@@ -1,0 +1,244 @@
+<!-- Webcomponents -->
+<link rel="import" href="../vendor/polymer/polymer.html">
+<link rel="import" href="combine-vote.html">
+<link rel="import" href="db-save.html">
+<link rel="import" href="db-retrieve.html"> 
+<link rel="import" href="stat-widget.html">
+<link rel="import" href="map-element.html">
+<link rel="import" href="../vendor/core-collapse/core-collapse.html">
+<link rel="import" href="../vendor/core-overlay/core-overlay.html">
+    
+<polymer-element name="cth-housemouse">
+
+    <template>
+
+		<!-- Bootstrap Core CSS -->
+		<link href="../styles/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+		<!-- font for arrow -->
+        <link href="../styles/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+		<!-- Custom Theme CSS -->
+		<link href="../styles/style.css" rel="stylesheet">
+
+
+		<nav id="page-top" class="navbar navbar-custom  navbar-fixed-top  clearTransform" role="navigation">
+		    <div class="container">
+		        <div class="navbar-header">
+		            <a class="navbar-brand" href="#page-top">
+		              <span class="light"></span>
+		            </a>
+		        </div>
+
+		        <div class="navrectangle ">
+                    <button on-click="{{ toggleOverlay }}" class="helpBoxButton">H<br>E<br>L<br>P</button>
+		            <ul class="nav navbar-nav">
+		                <li class="page-scroll bol">
+		                    <a href="../#page-top"></a>
+		                </li>
+		                <li class="page-scroll bol">
+		                    <a href="../#vote"></a>
+		                </li>
+		                <li class="page-scroll bol">
+		                    <a href="../#map"></a>
+		                </li>
+		                <li class="page-scroll bol">
+		                    <a href="../#stats"></a>
+		                </li>
+		            </ul>
+		         
+		        </div>
+
+		    </div>
+		</nav>  
+        
+        <section class="intro p1">
+            <div class="intro-body">
+                	<div class="logowrapper">
+                        <img data-scroll-reveal="enter from bottom 10px over .8s after 0.3s" class="logowhatdoes" src="../images/whatdoes.svg"/>
+				        <img data-scroll-reveal="enter from bottom 10px over .9s after 1s" class="logohouse" src="../images/house.svg"/>
+				        <img data-scroll-reveal="enter from bottom 10px over .9s after 1.5s" class="logomeantoyou" src="../images/meantoyou.svg"/>
+				    </div>
+
+                    <core-overlay id="overlay" layered backdrop transition="core-transition-center">
+                        <section>
+                            <h1>Explanation</h1>
+                            <p>
+                            This website is a merge of two projects the Coding the Humanities students worked on. The first project was derived from the article 'Metaphor and Interdisciplinary analysis' by Humanities scholar Christina Schaeffner about metaphors in political discourse. The question 'What_does_house_mean_to_you?' is related to the 'Common European House Metaphor'; a misunderstanding between Gorbachev and his BRD counterpart Von Weizsäcker. 
+                            </p>
+
+                            <a href="http://www.tandfonline.com/doi/abs/10.1080/02613539708455809#.U7UvqRZOZ4U"> Link to Christina Schaeffner's 'Metaphor and Interdisciplinary Analysis'</a>
+
+                            <p>
+                            Gorbachev started a conversation with his colleague about Europe, comparing Europe to a house. His mental image of this house metaphor, however, was more of a Sovjet style apartment building in which every European country has its own apartment, whereas Von Weizsäcker's mental image resembled a family home more common in Germany, with a shared living room and multiple bedrooms. Consequently, the two state leaders had an interesting conversation with several misconceptions. The Common European House metaphor became part of the wider European political discourse, which it influenced greatly. 
+                            </p>
+
+                            <p>
+                            The second project is about the Open Data website of the Dutch government set up to oblige the EU INSPIRE Directive, that aims to "enable the sharing of environmental spatial information among public sector organisations and better facilitate public access to spatial information across Europe" (<a href="http://inspire.ec.europa.eu/">http://inspire.ec.europa.eu/</a>). The website of the Dutch government, however, is not operating as it should. This is what we wanted to show in the second project. 
+                            </p>
+
+                            <p>
+                            The three types of houses are part of the project that was derived from the Christina Schaeffner article mentioned above. You pick the image that is most closely related to your idea of a 'house'. When you log in with Facebook, the result of the input all over Europe will be shown on the map. Different colours will designate the type of house chosen most. 
+                            </p>
+
+                            <p>
+                            Of the six icons representing 'security', 'finance', 'transportation', 'health', 'family' and 'nature', you are to pick three. This will instigate a search through the open data of the Dutch government on https://data.overheid.nl/ for related terms. When you log in with Facebook, the result will show below in the shape of a bar, showing in percentages how many of the links are working, semi-working, and not working at all.
+                            </p>
+
+                        </section>
+                    </core-overlay>     
+            </div>
+        </section>
+        
+        <core-collapse id="collapseVote" class="cCollapse" fixedsize duration="2">
+            <section id="vote" class="intro p2">
+                <combine-vote class="polymerContent" singleVote="{{ singleVote }}"></combine-vote>
+            </section>
+        </core-collapse>
+        
+        <db-save combinedvote="{{ singleVote }}"></db-save>
+        <db-retrieve publishedData="{{ retrieved }}"></db-retrieve>
+        
+        <core-collapse id="collapseCecking" duration="1">
+            <section class="consoleContainer">
+                <div id="consoleTextVote" class="consoleText">
+                </div>
+            </section>
+        </core-collapse>    
+
+        <core-collapse class="cCollapse" id="collapseMap" fixedsize duration="4">
+            <section id="map" class="intro p3">
+                <map-element class="polymerContent vCenter" data="{{retrieved}}"></map-element>
+            </section>
+        </core-collapse>
+        
+        <core-collapse class="cCollapse" id="collapseStats" fixedsize duration="4">
+            <section id="stats" class="intro p4">      
+                <stat-widget class="polymerContent" vote="{{ singleVote }}"></stat-widget>
+            </section>
+        </core-collapse>
+
+        <section class="p5">
+            <div class="footer">    
+                <a class="footerText" href="disclaimer.html"> Disclaimer_ </a> 
+            </div>  
+        </section>
+		
+    </template>
+    
+
+    <script>
+        Polymer('cth-housemouse', {
+
+            singleVoteChanged: function(){
+                this.shadowRoot.querySelector('#collapseCecking').toggle();
+                this.checkingData();
+            },
+
+            ready: function() {
+                // Wrote a workarround to target our elements inside the shadowRoot correctly, its a dirty fix, but it works. Might be that another library would work better for our case. The animation isn't that complicated. 
+
+                window.workArroundScrollReveal = this.shadowRoot.querySelectorAll('[data-scroll-reveal]');
+
+                // Normal call of scrollReveal
+
+                window.scrollReveal = new scrollReveal();
+
+                // Navbar workarround
+
+                //targetting the <a> tags within the pagescrollbullets
+                var navSelector = this.shadowRoot.querySelectorAll('.page-scroll a');
+
+                // Global shadowRootFix
+                window.shadowRootFix = this.shadowRoot;
+
+                // jQuery for page scrolling feature - requires jQuery Easing plugin
+                $(function() {
+                    $(navSelector).bind('click', function(event) {
+
+                        var cleanID = $(this).attr('href');
+                        var targetSelector = window.shadowRootFix.querySelector(cleanID);
+                        var targetOffset = targetSelector.offsetTop;
+
+                        $('html, body').stop().animate({
+                            scrollTop: targetOffset
+                            }, 1500, 'easeInOutExpo');
+
+                        event.preventDefault();
+                        
+                    });
+                });
+
+                // calling the unwind of the Vote element
+
+                var shadowFix = this.shadowRoot;
+
+                function openVote() {
+                    shadowFix.querySelector('#collapseVote').toggle();
+                };
+
+                setTimeout(openVote, 3000);
+
+            },
+            checkingData: function() {
+
+                var text = [
+                    "&lt;Connection to database&gt;",
+                    "&lt;Uploading....&gt;",
+                    "&lt;Upload Done&gt;",
+                    "&lt;Downloading all userdata&gt;",
+                    "&lt;Calculating choices....&gt;",
+                    "&lt;Generating SVG map....&gt;",
+                    "&lt;Map Done&gt;",
+                    "&lt;Connection to govermental database&gt;",
+                    "&lt;Downloading metadata&gt;",
+                    "&lt;Calculation Broken links&gt;",
+                    "&lt;Done&gt;",
+                    "&lt;&#95;"
+                ];
+
+                var shadowFix = this.shadowRoot;
+
+                var i = 0;
+                var newTop = 82;
+
+                function addConsoleTag() {
+                    // making room for new value
+                    newTop = newTop - 32;
+                    var newTopPx = newTop + "px";
+                    shadowFix.querySelector('#consoleTextVote').style.top = newTopPx;
+
+                    // adding the new one
+                    var addition = "<p style=\"margin: 0 ;\">" + text[i] + "</p>";
+                    shadowFix.querySelector('#consoleTextVote').innerHTML += addition;
+
+                    // opening the final
+                    if (i== text.length - 1) {
+                        shadowFix.querySelector('#collapseMap').toggle();
+                        shadowFix.querySelector('#collapseStats').toggle();
+                    }
+
+                    function getRandomInt(min, max) {
+                      return Math.floor(Math.random() * (max - min)) + min;
+                    }
+
+                    var randomTime = getRandomInt(100, 1500);
+
+                    i++;
+                    if (i < text.length) {
+                        setTimeout(addConsoleTag, randomTime);
+                    };
+
+                };
+
+                addConsoleTag();
+            },
+            toggleOverlay: function() {
+                this.shadowRoot.querySelector('#overlay').toggle(); 
+            }
+
+
+        });
+        
+    </script>
+</polymer-element>

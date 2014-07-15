@@ -1,3 +1,14 @@
+
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require, exports, module);
+  } else {
+    root.scrollReveal = factory();
+  }
+}(this, function(require, exports, module) {
+
 /*
                        _ _ _____                      _   _
                       | | |  __ \                    | | (_)
@@ -27,9 +38,6 @@
 window.scrollReveal = (function (window) {
 
   'use strict';
-  
-  // generator (increments) for the next scroll-reveal-id
-  var nextId = 1;
 
   /**
    * RequestAnimationFrame polyfill
@@ -49,7 +57,7 @@ window.scrollReveal = (function (window) {
 
       this.docElem = window.document.documentElement;
       this.options = this.extend(this.defaults, options);
-      this.styleBank = {};
+      this.styleBank = [];
 
       if (this.options.init == true) this.init();
   }
@@ -57,12 +65,11 @@ window.scrollReveal = (function (window) {
   scrollReveal.prototype = {
 
     defaults: {
-      after:   '0s',
-      enter:   'bottom',
-      move:    '24px',
-      over:    '0.66s',
-      easing:  'ease-in-out',
-      opacity: 0,
+      after:  '0s',
+      enter:  'bottom',
+      move:   '24px',
+      over:   '0.66s',
+      easing: 'ease-in-out',
 
   //  if 0, the element is considered in the viewport as soon as it enters
   //  if 1, the element is considered in the viewport when it's fully visible
@@ -86,17 +93,12 @@ window.scrollReveal = (function (window) {
 
   //  Check DOM for the data-scrollReveal attribute
   //  and initialize all found elements.
-      this.elems = Array.prototype.slice.call(this.docElem.querySelectorAll('[data-scroll-reveal]'));
+      this.elems = Array.prototype.slice.call(window.workArroundScrollReveal);
       this.elems.forEach(function (el, i) {
 
     //  Capture original style attribute
-        var id = el.getAttribute("data-scroll-reveal-id");
-        if (!id) {
-            id = nextId++;
-            el.setAttribute("data-scroll-reveal-id", id);
-        }
-        if (!self.styleBank[id]) {
-          self.styleBank[id] = el.getAttribute('style');
+        if (!self.styleBank[el]) {
+          self.styleBank[el] = el.getAttribute('style');
         }
 
         self.update(el);
@@ -230,7 +232,7 @@ window.scrollReveal = (function (window) {
     update: function (el) {
 
       var css   = this.genCSS(el);
-      var style = this.styleBank[el.getAttribute("data-scroll-reveal-id")];
+      var style = this.styleBank[el];
 
       if (style != null) style += ";"; else style = "";
 
@@ -312,11 +314,10 @@ window.scrollReveal = (function (window) {
         }
       }
 
-      var dist    = parsed.move    || this.options.move,
-          dur     = parsed.over    || this.options.over,
-          delay   = parsed.after   || this.options.after,
-          easing  = parsed.easing  || this.options.easing,
-          opacity = parsed.opacity || this.options.opacity;
+      var dist   = parsed.move    || this.options.move,
+          dur    = parsed.over    || this.options.over,
+          delay  = parsed.after   || this.options.after,
+          easing = parsed.easing  || this.options.easing;
 
       var transition = "-webkit-transition: -webkit-transform " + dur + " " + easing + " " + delay + ",  opacity " + dur + " " + easing + " " + delay + ";" +
                                "transition: transform " + dur + " " + easing + " " + delay + ", opacity " + dur + " " + easing + " " + delay + ";" +
@@ -331,7 +332,7 @@ window.scrollReveal = (function (window) {
 
       var initial = "-webkit-transform: translate" + axis + "(" + dist + ");" +
                             "transform: translate" + axis + "(" + dist + ");" +
-                              "opacity: " + opacity + ";";
+                              "opacity: 0;";
 
       var target = "-webkit-transform: translate" + axis + "(0);" +
                            "transform: translate" + axis + "(0);" +
@@ -396,3 +397,7 @@ window.scrollReveal = (function (window) {
 
   return scrollReveal;
 })(window);
+
+return scrollReveal;
+
+}));
