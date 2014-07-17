@@ -123,16 +123,16 @@
                 // Navbar linking and animation workarround.
                 var navSelector = this.shadowRoot.querySelectorAll('.page-scroll a');
 
-                self = this;
-
                 $(function() {
                     $(navSelector).bind('click', function(event) {
 
                         var cleanID = $(this).attr('href');
                         var targetSelector = window.shadowRootFix.querySelector(cleanID);
-                        var targetOffset = targetSelector.offsetTop;  
+                        var targetOffset = targetSelector.offsetTop;
 
-                        self.throwDown(targetOffset);
+                        $('html, body').stop().animate({
+                            scrollTop: targetOffset
+                            }, 1500, 'easeInOutExpo');
 
                         event.preventDefault();
                     });
@@ -152,23 +152,7 @@
                 // toggeling the console after user votes.
                 this.shadowRoot.querySelector('#collapseConsole').toggle();
                 this.shadowRoot.querySelector('#consoled').toggle();
-                setTimeout(this.inbetweenThrowDown, 500); 
-            },
-
-            throwDown: function(offsetRange) {
-                $('html, body').stop().animate({
-                    scrollTop: offsetRange
-                    }, 1500, 'easeInOutExpo');
-            },
-
-            inbetweenThrowDown: function() {
-                // This is very weird in this function; it should point to the polymer object, but it points to the window. So I selected it from up top. 
-                var target = document.querySelector('cth-housemouse');
-                var consoleSelector = target.shadowRoot.querySelector('#console');
-                var consoleOffset = consoleSelector.offsetTop;
-                target.throwDown(consoleOffset);
             }
-
         });
         
     </script>
