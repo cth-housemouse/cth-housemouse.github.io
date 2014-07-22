@@ -9,6 +9,8 @@
 <link rel="import" href="map-element.html"> 
 <link rel="import" href="stat-widget.html">
 <link rel="import" href="overlay-help.html">
+<link rel="import" href="overlay-info.html">
+
 
 <polymer-element name="cth-housemouse">
     <template>
@@ -25,7 +27,15 @@
 		        </div>
 		        <div class="navrectangle ">
 
-                    <button on-click="{{ toggleHelpOverlay }}" class="helpBoxButton">H<br>E<br>L<br>P</button>
+                <div id="infoButton" class="buttonContainer">
+                    <div class="shimmerItem"></div>
+                    <div class="overlayButton">I<br>N<br>F<br>O</div>
+                </div>
+
+                <div id="helpButton" class="buttonContainer">
+                    <div id="helpShimmer" class="shimmerItem autoShimmer"></div>
+                    <div class="overlayButton">H<br>E<br>L<br>P</div>
+                </div>
 
 		            <ul class="nav navbar-nav">
 		                <li class="page-scroll bol">
@@ -56,6 +66,7 @@
 			        <img data-scroll-reveal="enter from bottom 10px over .9s after 1.5s" class="logomeantoyou" src="../images/meantoyou.svg"/>
 			    </div>    
             </div>
+             <div id="jumpyArrow" class="arrow bounce hidingArrow"></div>
         </section>
         
         <core-collapse id="collapseVote" class="cCollapse" duration="2">
@@ -94,6 +105,10 @@
         <core-overlay id="helpOverlay" layered transition="core-transition-center">
             <overlay-help></overlay-help>
         </core-overlay> 
+
+        <core-overlay id="infoOverlay" layered transition="core-transition-center">
+            <overlay-info></overlay-info>
+        </core-overlay> 
 		
     </template>
     
@@ -112,10 +127,23 @@
                 // Making the nav bullets work
                 this.navAnimatedLinks();
 
+
+                //set evenlisteners
+                var helpButton = this.shadowRoot.querySelector('#helpButton');
+                helpButton.addEventListener("click", this.toggleHelpOverlay, false);
+
+                
+                var infoButton = this.shadowRoot.querySelector('#infoButton');
+                infoButton.addEventListener("click", this.toggleInfoOverlay, false);
+
+                // Remove shimmer
+                setTimeout(this.autoShimmerRemoveAddArrow, 3000);
+
                 // showing the Vote element after the 3 sec's of banneranimation.
                 function openVote() {
                     window.shadowRootFix.querySelector('#collapseVote').toggle();
                 };
+
                 setTimeout(openVote, 3000);
             },
 
@@ -141,10 +169,21 @@
 
             toggleHelpOverlay: function() {
                 // Toggeling the overlay on the help button.
-                var toggle = window.shadowRootFix.querySelector('#helpOverlay');
+                var toggle1 = window.shadowRootFix.querySelector('#infoOverlay');
+                var toggle2 = window.shadowRootFix.querySelector('#helpOverlay');
 
-                if (toggle != null) {
-                    toggle.toggle();
+                if (toggle1 != null && toggle2 != null) {
+                    toggle2.toggle();
+                };
+            },
+
+            toggleInfoOverlay: function() {
+                // Toggeling the overlay on the help button.
+                var toggle1 = window.shadowRootFix.querySelector('#infoOverlay');
+                var toggle2 = window.shadowRootFix.querySelector('#helpOverlay');
+
+                if (toggle1 != null && toggle2 != null) {
+                    toggle1.toggle();
                 };
             },
 
@@ -152,7 +191,7 @@
                 // toggeling the console after user votes.
                 this.shadowRoot.querySelector('#collapseConsole').toggle();
                 this.shadowRoot.querySelector('#consoled').toggle();
-                setTimeout(this.inbetweenThrowDown, 500); 
+                setTimeout(this.consoleThrowDown, 500); 
             },
 
             throwDown: function(offsetRange) {
@@ -161,12 +200,21 @@
                     }, 1500, 'easeInOutExpo');
             },
 
-            inbetweenThrowDown: function() {
-                // 'this' is very weird in this function; it should point to the polymer object, but it points to the window. So I selected it from up top. 
+            consoleThrowDown: function() {
+                // Apparently when calling with a setTimeout, 'this' become's window.
                 var target = document.querySelector('cth-housemouse');
-                var consoleSelector = target.shadowRoot.querySelector('#console');
-                var consoleOffset = consoleSelector.offsetTop;
-                target.throwDown(consoleOffset);
+                var consoleSelectorOffset = target.shadowRoot.querySelector('#console').offsetTop;
+                target.throwDown(consoleSelectorOffset);
+            },
+
+            autoShimmerRemoveAddArrow: function() {
+                // Apparently when calling with a setTimeout, 'this' become's window.
+                var target = document.querySelector('cth-housemouse');
+                target.shimmer = target.shadowRoot.querySelector('#helpShimmer');
+                target.shimmer.classList.remove('autoShimmer');
+
+                target.arrow = target.shadowRoot.querySelector('#jumpyArrow');
+                target.arrow.classList.remove('hidingArrow');
             }
 
         });
