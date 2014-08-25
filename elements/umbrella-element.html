@@ -66,7 +66,7 @@
 			        <img data-scroll-reveal="enter from bottom 10px over .9s after 1.5s" class="logomeantoyou" src="../images/meantoyou.svg"/>
 			    </div>    
             </div>
-             <div id="jumpyArrow" class="arrow bounce hidingArrow"></div>
+            <div id="jumpyArrow" class="arrow bounce hidingArrow"></div>
         </section>
         
         <core-collapse id="collapseVote" class="cCollapse" duration="2">
@@ -81,16 +81,18 @@
         <core-collapse id="collapseConsole" class="cCollapse" duration="2">
             <section id="console" class="mainSection sectionConsole">
                 <console-element id="consoled" class="polymerContent"></console-element>
+                <div id="jumpyArrow2" class="arrow bounce hidingArrow"></div>
             </section>
         </core-collapse>    
 
         <core-collapse id="collapseMap" class="cCollapse" duration="4">
             <section id="map" class="mainSection sectionMap">
                 <map-element class="polymerContent" data="{{retrieved}}"></map-element>
+                <div id="jumpyArrow3" class="arrow bounce"></div>
             </section>
         </core-collapse>
         
-        <core-collapse id="collapseStats" class="cCollapse" fixedsize duration="4">
+        <core-collapse id="collapseStats" class="cCollapse" duration="4">
             <section id="stats" class="mainSection sectionStats">      
                 <stat-widget class="polymerContent" vote="{{ singleVote }}"></stat-widget>
             </section>
@@ -136,15 +138,15 @@
                 var infoButton = this.shadowRoot.querySelector('#infoButton');
                 infoButton.addEventListener("click", this.toggleInfoOverlay, false);
 
-                // Remove shimmer
-                setTimeout(this.autoShimmerRemoveAddArrow, 3000);
-
                 // showing the Vote element after the 3 sec's of banneranimation.
                 function openVote() {
                     window.shadowRootFix.querySelector('#collapseVote').toggle();
                 };
 
                 setTimeout(openVote, 3000);
+
+                // Remove shimmer
+                setTimeout(this.autoShimmerRemoveAddArrow, 5000);
             },
 
             navAnimatedLinks: function() {

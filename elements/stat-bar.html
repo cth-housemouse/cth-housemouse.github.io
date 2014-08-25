@@ -13,10 +13,10 @@
       }
      
       .concept {
-          width: 90%;
+          width: 70vw;
           height: 50px;
           background-color: #6984dd;
-          margin: 20px auto;
+          margin: 40px auto 0 auto;
       }
       
       .nametag{
@@ -102,9 +102,16 @@
           text-shadow: 0px 0px 0px #666;
         }
       }*/
-    </style>  
-  
-    <div class="concept"> 
+
+      core-tooltip {
+        text-transform: capitalize;
+        outline: none;
+      }
+
+    </style>
+
+    <core-tooltip label="{{ concept.name }}"  position="bottom">
+    <div class="concept">
       <div class="nametag">
         <img class="conceptImg" src="../images/{{concept.name}}.png"/>
       </div>
@@ -120,8 +127,9 @@
             <p>{{notWorkingPercentage}}%</p>
         </div>
       </div>
-
     </div>
+    </core-tooltip>
+
   </template>
   <script>
     Polymer('stat-bar', {
