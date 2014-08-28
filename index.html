@@ -2713,18 +2713,24 @@ Example:
 <!-- bower install --save Polymer/firebase-element -->
 <polymer-element name="console-element" assetpath="elements/">
 	<template>
-		<style type="text/css">
+		<style type="text/css">  
 
             .consoleBox {
                 background-color: rgba(0,0,0,0.9);
                 height: 85vh;
-                width: 70%;
+                width: 100%;
                 margin: 5vh auto 10vh auto;
                 border-radius: 2px;
                 overflow-y: scroll;
                 -webkit-box-shadow: 6px 6px 6px 0px rgba(50, 50, 50, 0.59);
                 -moz-box-shadow:    6px 6px 6px 0px rgba(50, 50, 50, 0.59);
                  box-shadow:        6px 6px 6px 0px rgba(50, 50, 50, 0.59);
+            }
+
+            @media (min-width: 700px) {
+                .consoleBox {
+                    width: 70%;
+                }
             }
 
 			.consoleText {
@@ -2736,6 +2742,13 @@ Example:
 			    font-family: "Consolas";
                 text-align: left;
 			}
+
+            p {
+                margin: 0;
+                padding: 0;
+                font-size: 18px;
+                line-height: 18px;
+            }
            
             div#consoleTextVote p:nth-child(21) {
                 color: rgba(255,0,0,1);
@@ -2763,38 +2776,29 @@ Example:
                 animation-iteration-count: infinite;
             }
 
-                @-moz-keyframes blinker {  
-                    0% { opacity: 1.0; }
-                    5% {opacity: 0.0;}
-                    50% { opacity: 0.0; }
-                    55% { opacity: 1.0}
-                    100% { opacity: 1.0; }
-                }
+            @-moz-keyframes blinker {  
+                0% { opacity: 1.0;  }
+                5% {opacity: 0.0;   }
+                50% { opacity: 0.0; }
+                55% { opacity: 1.0; }
+                100% { opacity: 1.0; }
+            }
 
-                @-webkit-keyframes blinker {  
-                    0% { opacity: 1.0; }
-                    5% {opacity: 0.0;}
-                    50% { opacity: 0.0; }
-                    55% { opacity: 1.0}
-                    100% { opacity: 1.0; }
-                }
+            @-webkit-keyframes blinker {  
+                0% { opacity: 1.0;  }
+                5% {opacity: 0.0;   }
+                50% { opacity: 0.0; }
+                55% { opacity: 1.0; }
+                100% { opacity: 1.0; }
+            }
 
-                @keyframes blinker {  
-                    0% { opacity: 1.0; }
-                    5% {opacity: 0.0;}
-                    50% { opacity: 0.0; }
-                    55% { opacity: 1.0}
-                    100% { opacity: 1.0; }
-                }
-                            }
-			
-            p {
-			    margin: 0;
-			    padding: 0;
-			    font-size: 18px;
-			    line-height: 18px;
-			}
-
+            @keyframes blinker {  
+                0% { opacity: 1.0; }
+                5% {opacity: 0.0;   }
+                50% { opacity: 0.0; }
+                55% { opacity: 1.0;  }
+                100% { opacity: 1.0; }
+            }
 		</style>
 
 	<div class="consoleBox">
@@ -3015,12 +3019,9 @@ Example:
       }
       
       .mapContainer {
-        display: inline-block;
-        position: relative;
-        width: 100%;
-        height: 100%;
-        padding-bottom: 47%;
-        vertical-align: middle;
+        width: 80vw;
+        height: 100vh;
+        padding-bottom: 10vh;
         overflow: hidden;
       }
 
@@ -3224,7 +3225,7 @@ Example:
           width: 70vw;
           height: 50px;
           background-color: #6984dd;
-          margin: 40px auto 0 auto;
+          margin: 20px auto;
       }
       
       .nametag{
@@ -3242,14 +3243,19 @@ Example:
       }
 
       .total{
+          box-sizing: border-box;
           float: left;
           text-align: center;
-          padding-top: 7px;
           width: 10%;
-          height: 43px;
+          height: 50px;
           background-color: #B8B8B8;
           font-size: 12px;
-          line-height: 10px;
+          line-height: 50px;
+          vertical-align: center;
+      }
+
+      .total p {
+          margin: 0;
       }
       
       .wrapper{
@@ -3275,12 +3281,7 @@ Example:
           height: 50px;
           background-color: #dd9169;
       }
-/*
-      core-tooltip {
-        width: 100%;
-        height: 100%;
-      }
-*/
+
       .status p {
           text-align: center;
           color: transparent;
@@ -3289,37 +3290,29 @@ Example:
      .status:hover {
           color: #696969;
           font-size: 15px;
-          /*-webkit-animation: textFadeIn 0.2s linear 0.1s alternate both;
-          animation: textFadeIn 0.2s linear 0.1s alternate both;*/
      }
-     
-     /*@-webkit-keyframes textFadeIn {
-        from {
-          text-shadow: 0px 0px 50px #fff;
-        }
-        to {
-          text-shadow: 0px 0px 0px #666;
-        }
-      }
-     
-      @keyframes textFadeIn {
-        from {
-          text-shadow: 0px 0px 50px #fff;
-        }
-        to {
-          text-shadow: 0px 0px 0px #666;
-        }
-      }*/
 
       core-tooltip {
         text-transform: capitalize;
         outline: none;
       }
 
+      .cf:before,
+      .cf:after {
+          content: " "; /* 1 */
+          display: table; /* 2 */
+      }
+
+      .cf:after {
+          clear: both;
+      }
+
+      
+
     </style>
 
     <core-tooltip label="{{ concept.name }}" position="bottom">
-    <div class="concept">
+    <div class="concept cf">
       <div class="nametag">
         <img class="conceptImg" src="../images/{{concept.name}}.png">
       </div>
@@ -3358,6 +3351,7 @@ Example:
     <style type="text/css">
      
       h1 {
+        margin-top: 10px;
         padding: 4px 0;
         background-color: black;
         color:#E8E8E8;
@@ -3411,10 +3405,32 @@ Example:
         font-family: NittyNormal;
       }
 
+      img.infographic {
+        width: 100%;
+        height: 40vh;
+        margin: 0 auto 20px auto;
+        display: block;
+        background-color: yellow;
+      }
+
+      .cf:before,
+      .cf:after {
+          content: " "; /* 1 */
+          display: table; /* 2 */
+      }
+
+      .cf:after {
+          clear: both;
+      }
+
     </style>
 
-      <h1>Available_data_</h1>
+      <h1>Comparison_</h1>
 
+      <p class="explaination">We've collected alot of data ourselves, lets compare it to other data! Lets start with the Netherlands. The place for that should be the opendata initiative.</p>
+      <img src="" alt="" class="infographic">
+
+      <h1>Problem</h1>
       <p class="explaination">Too bad, we would have loved to tell you more about {{ vote.concepts[0]}}, {{ vote.concepts[1]}} and {{vote.concepts[2]}} in the Netherlands, but the data from openoverheid at our disposal is highly lacking. See the chart below for an optimistic estimation of the amount  of working, semi-working, and non-working links in the data set.</p>
 
       <div class="legendContainer">
@@ -3433,9 +3449,13 @@ Example:
       </div>
 
       <template repeat="{{ chosenConcepts in dataForStatBar }}">
-        <stat-bar concept="{{ chosenConcepts }}"></stat-bar>
+        <stat-bar class="cf" concept="{{ chosenConcepts }}"></stat-bar>
       </template>
 
+      <h1>Future</h1>
+      <p class="explaination">The government should probably work a bit harder on structuring their information.</p>
+      <img src="" alt="" class="infographic">
+      
   </template>
 
   <script>    
@@ -3453,37 +3473,36 @@ Example:
       },     
       concepts:
       [ 
-    { total: 48,
-    working: 5,
-    semiWorking: 8,
-    notWorking: 1,
-    name: 'security' },
-    { total: 1,
-    working: 1,
-    semiWorking: 0,
-    notWorking: 0,
-    name: 'wealth' },
-    { total: 63,
-    working: 24,
-    semiWorking: 0,
-    notWorking: 32,
-    name: 'transport' },
-    { total: 67,
-    working: 7,
-    semiWorking: 23,
-    notWorking: 12,
-    name: 'health' },
-    { total: 649,
-    working: 129,
-    semiWorking: 170,
-    notWorking: 115,
-    name: 'nature' },
-    { total: 229,
-    working: 114,
-    semiWorking: 36,
-    notWorking: 5,
-    name: 'family' }
-    
+        { total: 48,
+        working: 5,
+        semiWorking: 8,
+        notWorking: 1,
+        name: 'security' },
+        { total: 1,
+        working: 1,
+        semiWorking: 0,
+        notWorking: 0,
+        name: 'wealth' },
+        { total: 63,
+        working: 24,
+        semiWorking: 0,
+        notWorking: 32,
+        name: 'transport' },
+        { total: 67,
+        working: 7,
+        semiWorking: 23,
+        notWorking: 12,
+        name: 'health' },
+        { total: 649,
+        working: 129,
+        semiWorking: 170,
+        notWorking: 115,
+        name: 'nature' },
+        { total: 229,
+        working: 114,
+        semiWorking: 36,
+        notWorking: 5,
+        name: 'family' }
       ],
       dataForStatBar: []
 
@@ -4211,7 +4230,7 @@ h6 {
     letter-spacing: 1px;
 }
 
-p {
+/*p {
     margin: 0 0 25px;
     font-size: 18px;
     line-height: 1.5;
@@ -4223,7 +4242,7 @@ p {
         font-size: 20px;
         line-height: 1.6;
     }
-}
+}*/
 
 a {
     color: #28c3ab;
@@ -4732,14 +4751,13 @@ webkit-tap-highlight-color: rgba(255,255,255,.2);
 
   </head>
 
-  <body data-spy="scroll" data-target=".navbar-custom">
+  <body>
   
      	<cth-housemouse></cth-housemouse>
 
       <script src="vendor/jquery/jquery.js"></script> 
       <script src="vendor/jquery.easing.min.js"></script> 
       <script src="scripts/CTH-VERSION-scrollReveal.js"></script>
-      <script src="scripts/CTH-VERSION-bootstrap.js"></script>
 
 
 

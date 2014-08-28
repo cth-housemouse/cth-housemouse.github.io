@@ -1,17 +1,23 @@
 <polymer-element name="console-element">
 	<template>
-		<style type="text/css">
+		<style type="text/css">  
 
             .consoleBox {
                 background-color: rgba(0,0,0,0.9);
                 height: 85vh;
-                width: 70%;
+                width: 100%;
                 margin: 5vh auto 10vh auto;
                 border-radius: 2px;
                 overflow-y: scroll;
                 -webkit-box-shadow: 6px 6px 6px 0px rgba(50, 50, 50, 0.59);
                 -moz-box-shadow:    6px 6px 6px 0px rgba(50, 50, 50, 0.59);
                  box-shadow:        6px 6px 6px 0px rgba(50, 50, 50, 0.59);
+            }
+
+            @media (min-width: 700px) {
+                .consoleBox {
+                    width: 70%;
+                }
             }
 
 			.consoleText {
@@ -23,6 +29,13 @@
 			    font-family: "Consolas";
                 text-align: left;
 			}
+
+            p {
+                margin: 0;
+                padding: 0;
+                font-size: 18px;
+                line-height: 18px;
+            }
            
             div#consoleTextVote p:nth-child(21) {
                 color: rgba(255,0,0,1);
@@ -50,38 +63,29 @@
                 animation-iteration-count: infinite;
             }
 
-                @-moz-keyframes blinker {  
-                    0% { opacity: 1.0; }
-                    5% {opacity: 0.0;}
-                    50% { opacity: 0.0; }
-                    55% { opacity: 1.0}
-                    100% { opacity: 1.0; }
-                }
+            @-moz-keyframes blinker {  
+                0% { opacity: 1.0;  }
+                5% {opacity: 0.0;   }
+                50% { opacity: 0.0; }
+                55% { opacity: 1.0; }
+                100% { opacity: 1.0; }
+            }
 
-                @-webkit-keyframes blinker {  
-                    0% { opacity: 1.0; }
-                    5% {opacity: 0.0;}
-                    50% { opacity: 0.0; }
-                    55% { opacity: 1.0}
-                    100% { opacity: 1.0; }
-                }
+            @-webkit-keyframes blinker {  
+                0% { opacity: 1.0;  }
+                5% {opacity: 0.0;   }
+                50% { opacity: 0.0; }
+                55% { opacity: 1.0; }
+                100% { opacity: 1.0; }
+            }
 
-                @keyframes blinker {  
-                    0% { opacity: 1.0; }
-                    5% {opacity: 0.0;}
-                    50% { opacity: 0.0; }
-                    55% { opacity: 1.0}
-                    100% { opacity: 1.0; }
-                }
-                            }
-			
-            p {
-			    margin: 0;
-			    padding: 0;
-			    font-size: 18px;
-			    line-height: 18px;
-			}
-
+            @keyframes blinker {  
+                0% { opacity: 1.0; }
+                5% {opacity: 0.0;   }
+                50% { opacity: 0.0; }
+                55% { opacity: 1.0;  }
+                100% { opacity: 1.0; }
+            }
 		</style>
 
 	<div class="consoleBox">

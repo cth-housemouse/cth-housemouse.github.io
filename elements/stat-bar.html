@@ -16,7 +16,7 @@
           width: 70vw;
           height: 50px;
           background-color: #6984dd;
-          margin: 40px auto 0 auto;
+          margin: 20px auto;
       }
       
       .nametag{
@@ -34,14 +34,19 @@
       }
 
       .total{
+          box-sizing: border-box;
           float: left;
           text-align: center;
-          padding-top: 7px;
           width: 10%;
-          height: 43px;
+          height: 50px;
           background-color: #B8B8B8;
           font-size: 12px;
-          line-height: 10px;
+          line-height: 50px;
+          vertical-align: center;
+      }
+
+      .total p {
+          margin: 0;
       }
       
       .wrapper{
@@ -67,12 +72,7 @@
           height: 50px;
           background-color: #dd9169;
       }
-/*
-      core-tooltip {
-        width: 100%;
-        height: 100%;
-      }
-*/
+
       .status p {
           text-align: center;
           color: transparent;
@@ -81,37 +81,29 @@
      .status:hover {
           color: #696969;
           font-size: 15px;
-          /*-webkit-animation: textFadeIn 0.2s linear 0.1s alternate both;
-          animation: textFadeIn 0.2s linear 0.1s alternate both;*/
      }
-     
-     /*@-webkit-keyframes textFadeIn {
-        from {
-          text-shadow: 0px 0px 50px #fff;
-        }
-        to {
-          text-shadow: 0px 0px 0px #666;
-        }
-      }
-     
-      @keyframes textFadeIn {
-        from {
-          text-shadow: 0px 0px 50px #fff;
-        }
-        to {
-          text-shadow: 0px 0px 0px #666;
-        }
-      }*/
 
       core-tooltip {
         text-transform: capitalize;
         outline: none;
       }
 
+      .cf:before,
+      .cf:after {
+          content: " "; /* 1 */
+          display: table; /* 2 */
+      }
+
+      .cf:after {
+          clear: both;
+      }
+
+      
+
     </style>
 
     <core-tooltip label="{{ concept.name }}"  position="bottom">
-    <div class="concept">
+    <div class="concept cf">
       <div class="nametag">
         <img class="conceptImg" src="../images/{{concept.name}}.png"/>
       </div>
